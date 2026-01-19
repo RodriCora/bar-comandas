@@ -1,0 +1,101 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Fondo degradado para toda la pantalla */
+body, html {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+}
+
+/* Contenedor del login */
+.login-container {
+  background: white;
+  padding: 40px 35px;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  width: 360px;
+  text-align: center;
+}
+
+/* Título */
+.login-container h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #4a4a4a;
+  letter-spacing: 1px;
+}
+
+/* Inputs */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 8px rgba(118,75,162,0.6);
+  outline: none;
+}
+
+/* Botón */
+.login-container button {
+  width: 100%;
+  padding: 14px;
+  background-color: #764ba2;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 6px 12px rgba(118,75,162,0.5);
+}
+
+.login-container button:hover {
+  background-color: #5a356f;
+}
+
+/* Mensajes flash */
+.flash-message {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+.flash-message.error {
+  background-color: #fdecea;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+}
+
+.flash-message.success {
+  background-color: #e6f4ea;
+  color: #388e3c;
+  border: 1px solid #388e3c;
+}
+
+.flash-message.info {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #1976d2;
+}

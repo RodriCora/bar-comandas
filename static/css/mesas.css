@@ -1,0 +1,221 @@
+/* Reset base */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0; 
+  padding: 0; 
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #d9d9d9; /* Gris claro */
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Contenedor del mapa */
+.bar-map {
+  display: grid;
+  grid-template-columns: repeat(7, 120px);
+  grid-template-rows: repeat(7, 120px);
+  gap: 30px; /* Espacio general entre mesas */
+  max-width: 900px;
+  width: 100%;
+  background: transparent;
+}
+
+/* Zonas fijas */
+.zona {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  border-radius: 15px;
+  color: white;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 1.3rem;
+}
+
+.entrada {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  background-color: #00bcd4; /* Cian */
+}
+
+/* Baños del lado derecho */
+.banos {
+  grid-column: 6 / 8;
+  grid-row: 5 / 7;
+  background-color: #00bcd4; /* Cian */
+}
+
+.cocina {
+  grid-column: 6 / 8;
+  grid-row: 1 / 3;
+  background-color: #00bcd4; /* Cian */
+}
+
+.caja {
+  grid-column: 6 / 8;
+  grid-row: 3 / 4;
+  background-color: #00bcd4; /* Cian */
+}
+
+/* Mesas simples */
+.mesa-simple {
+  background-color: #4caf50; /* Verde */
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Hover mesas simples */
+.mesa-simple:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+}
+
+/* Mesas dobles */
+.mesa-doble {
+  background-color: #4caf50;
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  padding: 0;
+}
+
+/* Hover mesas dobles */
+.mesa-doble:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+}
+
+/* Posiciones mesas dobles: pegadas borde a borde */
+/* Mesa doble 1 */
+.mesa-1a {
+  grid-column: 1;
+  grid-row: 2;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -30px; /* Compensa el gap para que queden pegadas */
+  z-index: 2;
+}
+.mesa-1b {
+  grid-column: 2;
+  grid-row: 2;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  z-index: 1;
+}
+
+/* Mesa doble 2 */
+.mesa-2a {
+  grid-column: 1;
+  grid-row: 3;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -30px;
+  z-index: 2;
+}
+.mesa-2b {
+  grid-column: 2;
+  grid-row: 3;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  z-index: 1;
+}
+
+/* Mesa doble 3 */
+.mesa-3a {
+  grid-column: 1;
+  grid-row: 4;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -30px;
+  z-index: 2;
+}
+.mesa-3b {
+  grid-column: 2;
+  grid-row: 4;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  z-index: 1;
+}
+
+/* Mesa doble 4 */
+.mesa-4a {
+  grid-column: 1;
+  grid-row: 5;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -30px;
+  z-index: 2;
+}
+.mesa-4b {
+  grid-column: 2;
+  grid-row: 5;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  z-index: 1;
+}
+
+/* Mesa doble 5 */
+.mesa-5a {
+  grid-column: 1;
+  grid-row: 6;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -30px;
+  z-index: 2;
+}
+.mesa-5b {
+  grid-column: 2;
+  grid-row: 6;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  z-index: 1;
+}
+
+/* Posiciones mesas simples */
+.mesa-11  { grid-column: 3; grid-row: 1; }
+.mesa-12  { grid-column: 4; grid-row: 1; }
+.mesa-13  { grid-column: 5; grid-row: 1; }
+.mesa-14  { grid-column: 3; grid-row: 2; }
+.mesa-15  { grid-column: 4; grid-row: 2; }
+.mesa-16  { grid-column: 5; grid-row: 2; }
+.mesa-17  { grid-column: 3; grid-row: 3; }
+.mesa-18  { grid-column: 4; grid-row: 3; }
+.mesa-19  { grid-column: 5; grid-row: 3; }
+.mesa-20  { grid-column: 3; grid-row: 4; }
+.mesa-21  { grid-column: 4; grid-row: 4; }
+.mesa-22  { grid-column: 5; grid-row: 4; }
+.mesa-23  { grid-column: 3; grid-row: 5; }
+.mesa-24  { grid-column: 4; grid-row: 5; }
+.mesa-25  { grid-column: 5; grid-row: 5; }
