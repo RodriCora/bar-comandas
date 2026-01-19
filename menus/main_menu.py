@@ -2,8 +2,6 @@ from menus.submenus.caja import submenu_caja
 from menus.submenus.supervisor import submenu_supervisor
 from menus.submenus.mesera import submenu_mesera
 from menus.submenus.cocina import submenu_cocina
-from menus.submenus.supervisor_mesera import alta_mesera, baja_mesera
-from menus.submenus.supervisor_mesas import gestion_mesas  # fijate que el archivo sea supervisor_mesa.py
 
 def login_role(user_db, role_name):
     print(f"\n🔐 Login {role_name}")
