@@ -1,55 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mapa de Mesas - BAR COMANDAS</title>
+  <meta charset="UTF-8">
+  <title>Mapa del Salón</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mesas.css') }}">
 </head>
 <body>
 
-  <h2>Mapa de Mesas - BAR COMANDAS</h2>
+<h2>Mapa del Salón</h2>
 
-  <div class="bar-map">
-    <!-- Zonas fijas -->
-    <div class="zona entrada">Entrada</div>
-    <div class="zona banos">Baños</div>
-    <div class="zona cocina">Cocina</div>
-    <div class="zona caja">Caja</div>
+<div class="salon">
 
-    <!-- Mesas dobles (5 pares) -->
-    <div class="mesa-doble mesa-1a" data-id="1">Mesa 1</div>
-    <div class="mesa-doble mesa-1b" data-id="2">Mesa 2</div>
+  <!-- ZONAS -->
+  <div class="zona barra">BARRA</div>
+  <div class="zona entrada">ENTRADA</div>
+  <div class="zona cocina">COCINA</div>
+  <div class="zona caja">CAJA</div>
+  <div class="zona banos">BAÑOS</div>
 
-    <div class="mesa-doble mesa-2a" data-id="3">Mesa 3</div>
-    <div class="mesa-doble mesa-2b" data-id="4">Mesa 4</div>
+  <!-- MESAS -->
+<div class="mesa ocupada mesa-1">1</div>
+<div class="mesa ocupada mesa-2">2</div>
 
-    <div class="mesa-doble mesa-3a" data-id="5">Mesa 5</div>
-    <div class="mesa-doble mesa-3b" data-id="6">Mesa 6</div>
+<div class="mesa ocupada mesa-3">3</div>
+<div class="mesa ocupada mesa-4">4</div>
+<div class="mesa ocupada mesa-5">5</div>
+<div class="mesa ocupada mesa-6">6</div>
 
-    <div class="mesa-doble mesa-4a" data-id="7">Mesa 7</div>
-    <div class="mesa-doble mesa-4b" data-id="8">Mesa 8</div>
+<div class="mesa ocupada grande mesa-14">14</div>
 
-    <div class="mesa-doble mesa-5a" data-id="9">Mesa 9</div>
-    <div class="mesa-doble mesa-5b" data-id="10">Mesa 10</div>
+<div class="mesa cobro mesa-11">11</div>
+<div class="mesa cobro mesa-12">12</div>
 
-    <!-- Mesas simples (15 mesas) -->
-    <div class="mesa-simple mesa-11" data-id="11">Mesa 11</div>
-    <div class="mesa-simple mesa-12" data-id="12">Mesa 12</div>
-    <div class="mesa-simple mesa-13" data-id="13">Mesa 13</div>
-    <div class="mesa-simple mesa-14" data-id="14">Mesa 14</div>
-    <div class="mesa-simple mesa-15" data-id="15">Mesa 15</div>
-    <div class="mesa-simple mesa-16" data-id="16">Mesa 16</div>
-    <div class="mesa-simple mesa-17" data-id="17">Mesa 17</div>
-    <div class="mesa-simple mesa-18" data-id="18">Mesa 18</div>
-    <div class="mesa-simple mesa-19" data-id="19">Mesa 19</div>
-    <div class="mesa-simple mesa-20" data-id="20">Mesa 20</div>
-    <div class="mesa-simple mesa-21" data-id="21">Mesa 21</div>
-    <div class="mesa-simple mesa-22" data-id="22">Mesa 22</div>
-    <div class="mesa-simple mesa-23" data-id="23">Mesa 23</div>
-    <div class="mesa-simple mesa-24" data-id="24">Mesa 24</div>
-    <div class="mesa-simple mesa-25" data-id="25">Mesa 25</div>
+<div class="mesa pagada mesa-15">15</div>
+<div class="mesa pagada mesa-16">16</div>
 
-  </div>
+<div class="mesa libre mesa-31">31</div>
+<div class="mesa libre mesa-32">32</div>
+<div class="mesa libre mesa-33">33</div>
+<div class="mesa libre mesa-34">34</div>
+
+</div>
 
 </body>
 </html>
