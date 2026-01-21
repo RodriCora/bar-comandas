@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mesa {{ numero }}</title>
+</head>
+<body>
+
+<h2>Mesa {{ numero }}</h2>
+
+<p><strong>Rol:</strong> {{ rol }}</p>
+
+{% if personal %}
+<p><strong>Atiende:</strong> {{ personal }}</p>
+{% endif %}
+
+<hr>
+
+<p>⚙️ Acá va la comanda (siguiente paso)</p>
+
+<br>
+
+<a href="{{ url_for('mesas') }}">⬅ Volver al mapa</a>
+
+</body>
+</html>

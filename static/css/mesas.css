@@ -1,158 +1,198 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 20px;
-  background: #f0f0f0;
-  font-family: Arial, sans-serif;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* CONTENEDOR */
+/* ================= CONTENEDOR GENERAL ================= */
 .salon {
-  position: relative;
-  width: 1100px;
-  height: 650px;
-  margin: auto;
-  background: #2e2e2e;
-  border-radius: 16px;
+    position: relative;           /* Para posicionar mesas relativas a este contenedor */
+    width: 1200px;
+    height: 700px;
+    background-color: #2f2f2f;
+    border-radius: 16px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* ZONAS */
+/* ================= ZONAS ================= */
 .zona {
-  position: absolute;
-  background: #00bcd4;
-  color: #000;
-  font-weight: bold;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    background-color: #05bcd4;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 12px;
+    padding: 20px;
 }
 
 .barra {
-  top: 15px;
-  left: 200px;
-  right: 200px;
-  height: 70px;
+    top: 20px;
+    left: 200px;
+    width: 700px;
 }
 
 .entrada {
-  left: 15px;
-  top: 200px;
-  width: 160px;
-  height: 140px;
+    top: 200px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
 }
 
 .cocina {
-  right: 15px;
-  top: 120px;
-  width: 180px;
-  height: 160px;
+    top: 120px;
+    right: 20px;
+    width: 160px;
+    height: 160px;
 }
 
 .caja {
-  right: 15px;
-  top: 300px;
-  width: 180px;
-  height: 90px;
+    top: 300px;
+    right: 20px;
+    width: 160px;
 }
 
 .banos {
-  right: 15px;
-  bottom: 40px;
-  width: 180px;
-  height: 140px;
+    bottom: 20px;
+    right: 20px;
+    width: 160px;
+    height: 160px;
 }
 
-/* MESAS */
-.mesa {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background: #91af4c;
-  border-radius: 12px;
-  color: #fff;
+/* ================= POSICIONAMIENTO DE LAS MESAS EN EL MAPA ================= */
+.salon a {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    outline: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 14px;
+    background-color: transparent; /* Se cambia dinámicamente */
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+/* Mesa más grande */
+.salon a.mesa-14 {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+
+/* Posiciones absolutas por mesa */
+.salon a.mesa-1  { top: 230px; left: 220px; }
+.salon a.mesa-2  { top: 230px; left: 310px; }
+.salon a.mesa-3  { top: 310px; left: 220px; }
+.salon a.mesa-4  { top: 310px; left: 310px; }
+.salon a.mesa-5  { top: 390px; left: 220px; }
+.salon a.mesa-6  { top: 390px; left: 310px; }
+.salon a.mesa-14 { top: 250px; left: 470px; }
+.salon a.mesa-11 { top: 390px; left: 470px; }
+.salon a.mesa-12 { top: 390px; left: 560px; }
+.salon a.mesa-15 { top: 470px; left: 470px; }
+.salon a.mesa-16 { top: 470px; left: 560px; }
+.salon a.mesa-31 { top: 230px; left: 650px; }
+.salon a.mesa-32 { top: 230px; left: 740px; }
+.salon a.mesa-33 { top: 310px; left: 650px; }
+.salon a.mesa-34 { top: 310px; left: 740px; }
+
+/* ================= ESTILOS DE LAS MESAS ================= */
+.salon a .mesa {
+    color: white;
+    font-weight: bold;
+    user-select: none;
+    pointer-events: none; /* para que no interfiera el div con el click en el a */
+}
+
+/* Mesa grande redonda */
+.salon a.mesa-14 .mesa {
+    border-radius: 50%;
+}
+
+/* Hover y foco */
+.salon a:hover,
+.salon a:focus {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+}
+
+/* Colores dinámicos en el enlace <a> */
+.salon a.libre {
+    background-color: #2ecc71 !important;
+}
+
+.salon a.ocupada {
+    background-color: #e74c3c !important;
+}
+
+.salon a.cobro {
+    background-color: #f39c12 !important;
+}
+
+.salon a.reservada {
+    background-color: #3498db !important;
+}
+/* Panel flotante orden (submenú) */
+.panel-orden {
+  position: fixed;
+  top: 50px;
+  left: 0;                 /* pegado al borde izquierdo */
+  width: 320px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #222;
+  color: white;
+  border-radius: 8px;
+  padding: 20px;
+  border: 2px solid #333;
+  z-index: 1000;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transform: translateX(-100%); /* total fuera a la izquierda */
+  transition: transform 0.3s ease;
+}
+
+/* Cuando se abre, vuelve a su lugar (visible) */
+.panel-orden.abierto {
+  transform: translateX(0);
+}
+
+
+/* Botón cerrar */
+.panel-orden button.cerrar {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-bottom: 15px;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
 }
 
-/* MESA DOBLE */
-.mesa.doble {
-  width: 160px;
-  display: flex;
+/* Etiquetas e inputs */
+.panel-orden label {
+  display: block;
+  margin: 12px 0 6px;
 }
 
-.mesa.doble span {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid rgba(255,255,255,0.3);
+.panel-orden select,
+.panel-orden input[type="number"] {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
 }
 
-.mesa.doble span:last-child {
-  border-right: none;
+/* Botón agregar */
+.panel-orden button.agregar {
+  margin-top: 15px;
+  background: #2ecc71;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  width: 100%;
 }
-
-/* MESA GRANDE */
-.mesa.grande {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-}
-
-/* POSICIONES */
-.mesa-1 { left: 220px; top: 220px; }
-.mesa-2 { left: 320px; top: 220px; }
-.mesa-3 { left: 220px; top: 330px; }
-.mesa-4 { left: 320px; top: 330px; }
-.mesa-5 { left: 220px; top: 430px; }
-.mesa-6 { left: 320px; top: 430px; }
-.mesa-14 { left: 490px; top: 220px; }
-.mesa-11 { left: 460px; top: 420px; }
-.mesa-12 { left: 560px; top: 420px; }
-.mesa-15 { left: 460px; top: 520px; }
-.mesa-16 { left: 560px; top: 520px; }
-.mesa-31 { left: 660px; top: 220px; }
-.mesa-32 { left: 760px; top: 220px; }
-.mesa-33 { left: 660px; top: 320px; }
-.mesa-34 { left: 760px; top: 320px; }
-
-/* ===== ESTADOS DE MESAS ===== */
-
-/* Mesa ocupada */
-.mesa.ocupada {
-  background: #2e7d32; /* verde oscuro */
-}
-
-/* Esperando cobro */
-.mesa.cobro {
-  background: #f9a825; /* naranja */
-  color: #000;
-}
-
-/* Mesa pagada */
-.mesa.pagada {
-  background: #c62828; /* rojo */
-}
-
-/* Mesa libre (opcional) */
-.mesa.libre {
-  background: #66bb6a; /* verde claro */
-}
-
-/* Hover general */
-.mesa:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-

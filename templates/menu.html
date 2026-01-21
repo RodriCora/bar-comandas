@@ -1,20 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <title>Menú Principal - BAR COMANDAS</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-</head>
-<body>
-    <h2>Bienvenido, {{ username }}!</h2>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('caja') }}">Caja / Admin</a></li>
-            <li><a href="#">Supervisor</a></li>
-            <li><a href="#">Mesera</a></li>
-            <li><a href="#">Cocina</a></li>
-        </ul>
-    </nav>
-    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Menú Principal{% endblock %}
+
+{% block content %}
+  <h2>Bienvenido {{ user }}!</h2>
+  <h3>Rol: {{ rol|capitalize }}</h3>
+
+  <ul>
+    {% if rol == "admin" %}
+      <li><a href="{{ url_for('menu_principal') }}">Administración General</a></li>
+      <li><a href="{{ url_for('caja') }}">Caja</a></li>
+      <li><a href="{{ url_for('mesas') }}">Mesas</a></li>
+      <li><a href="#">Reportes</a></li>
+    {% elif rol == "caja" %}
+      <li><a href="{{ url_for('caja') }}">Caja</a></li>
+      <li><a href="#">Cerrar Caja</a></li>
+    {% elif rol == "cocina" %}
+      <li><a href="#">Ver Pedidos</a></li>
+      <li><a href="#">Actualizar Estado Pedidos</a></li>
+    {% elif rol == "supervisor" %}
+      <li><a href="#">Supervisión</a></li>
+      <li><a href="#">Reportes</a></li>
+    {% elif rol == "mozas" %}
+      <li><a href="#">Tomar Pedidos</a></li>
+      <li><a href="#">Mesas</a></li>
+    {% else %}
+      <li>No tenés permisos asignados</li>
+    {% endif %}
+  </ul>
+
+  <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+{% endblock %}

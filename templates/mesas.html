@@ -1,48 +1,240 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Mapa del Salón</title>
+{% extends "base.html" %}
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/mesas.css') }}">
-</head>
-<body>
+{% block title %}Mapa del Salón{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mesas.css') }}">
+<style>
+  /* Panel flotante básico para orden */
+  .panel-orden {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    background: #222;
+    color: white;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    width: 320px;
+    max-height: 90vh;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .panel-orden.abierto {
+    transform: translateX(0);
+  }
+
+  .panel-orden h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .panel-orden p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  .panel-orden button.cerrar {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+
+  .panel-orden label {
+    display: block;
+    margin: 12px 0 6px;
+  }
+
+  .panel-orden select,
+  .panel-orden input[type="number"] {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .panel-orden button.agregar {
+    margin-top: 15px;
+    background: #2ecc71;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    width: 100%;
+  }
+
+  /* Botón enviar a cobrar */
+  #btn-enviar-cobro {
+    margin-top: 20px;
+    background: #f39c12;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
 <h2>Mapa del Salón</h2>
 
 <div class="salon">
 
-  <!-- ZONAS -->
+  <!-- ================= ZONAS ================= -->
   <div class="zona barra">BARRA</div>
   <div class="zona entrada">ENTRADA</div>
   <div class="zona cocina">COCINA</div>
   <div class="zona caja">CAJA</div>
   <div class="zona banos">BAÑOS</div>
 
-  <!-- MESAS -->
-<div class="mesa ocupada mesa-1">1</div>
-<div class="mesa ocupada mesa-2">2</div>
-
-<div class="mesa ocupada mesa-3">3</div>
-<div class="mesa ocupada mesa-4">4</div>
-<div class="mesa ocupada mesa-5">5</div>
-<div class="mesa ocupada mesa-6">6</div>
-
-<div class="mesa ocupada grande mesa-14">14</div>
-
-<div class="mesa cobro mesa-11">11</div>
-<div class="mesa cobro mesa-12">12</div>
-
-<div class="mesa pagada mesa-15">15</div>
-<div class="mesa pagada mesa-16">16</div>
-
-<div class="mesa libre mesa-31">31</div>
-<div class="mesa libre mesa-32">32</div>
-<div class="mesa libre mesa-33">33</div>
-<div class="mesa libre mesa-34">34</div>
+  <!-- ================= MESAS (MAPA BASE) ================= -->
+  {% for mesa_num in [1,2,3,4,5,6,11,12,14,15,16,31,32,33,34] %}
+    <a href="#" class="mesa-{{ mesa_num }} {% if estados.get(mesa_num) %}{{ estados.get(mesa_num) }}{% else %}libre{% endif %}">
+      <div class="mesa {% if mesa_num == 14 %}grande{% endif %}" data-numero="{{ mesa_num }}">
+        {{ mesa_num }}
+      </div>
+    </a>
+  {% endfor %}
 
 </div>
 
-</body>
-</html>
+<!-- Panel flotante orden (oculto por defecto) -->
+<div id="panel-orden" class="panel-orden" role="region" aria-label="Panel de Orden">
+  <button class="cerrar" id="btn-cerrar-orden">Cerrar</button>
+  <h3>Mesa <span id="orden-mesa-num"></span></h3>
+  <p>Mesera: <span id="nombre-mesera">{{ personal if personal else "No asignada" }}</span></p>
+
+  <form id="form-orden">
+    <label for="producto">Producto:</label>
+    <select id="producto" required>
+      <option value="" disabled selected>Elegí un producto</option>
+      <option value="Café">Café</option>
+      <option value="Té">Té</option>
+      <option value="Sándwich">Sándwich</option>
+      <option value="Ensalada">Ensalada</option>
+      <option value="Agua">Agua</option>
+      <!-- Agregá acá los productos reales -->
+    </select>
+
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" min="1" value="1" required>
+
+    <button type="submit" class="agregar">Agregar a la orden</button>
+  </form>
+
+  <hr>
+
+  <div id="lista-ordenes">
+    <p>No hay productos agregados.</p>
+  </div>
+
+  <button id="btn-enviar-cobro">Enviar a cobrar</button>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const panelOrden = document.getElementById('panel-orden');
+    const btnCerrarOrden = document.getElementById('btn-cerrar-orden');
+    const ordenMesaNum = document.getElementById('orden-mesa-num');
+    const nombreMeseraSpan = document.getElementById('nombre-mesera');
+    const formOrden = document.getElementById('form-orden');
+    const listaOrdenes = document.getElementById('lista-ordenes');
+    const btnEnviarCobro = document.getElementById('btn-enviar-cobro');
+
+    let mesaSeleccionada = null;
+    let ordenActual = [];
+
+    function abrirPanelOrden(numero) {
+      mesaSeleccionada = numero;
+      ordenMesaNum.textContent = numero;
+      ordenActual = [];
+      listaOrdenes.innerHTML = '<p>No hay productos agregados.</p>';
+      panelOrden.classList.add('abierto');
+    }
+
+    function cerrarPanelOrden() {
+      panelOrden.classList.remove('abierto');
+      mesaSeleccionada = null;
+      ordenActual = [];
+      listaOrdenes.innerHTML = '<p>No hay productos agregados.</p>';
+    }
+
+    function agregarProducto(producto, cantidad) {
+      const index = ordenActual.findIndex(item => item.producto === producto);
+      if (index >= 0) {
+        ordenActual[index].cantidad += cantidad;
+      } else {
+        ordenActual.push({ producto, cantidad });
+      }
+      renderizarOrden();
+    }
+
+    function renderizarOrden() {
+      if (ordenActual.length === 0) {
+        listaOrdenes.innerHTML = '<p>No hay productos agregados.</p>';
+        return;
+      }
+      listaOrdenes.innerHTML = '';
+      ordenActual.forEach(({ producto, cantidad }) => {
+        const div = document.createElement('div');
+        div.textContent = `${producto} x ${cantidad}`;
+        listaOrdenes.appendChild(div);
+      });
+    }
+
+    document.querySelectorAll('.mesa').forEach(mesa => {
+      mesa.addEventListener('click', e => {
+        e.preventDefault();
+        const numero = parseInt(mesa.dataset.numero);
+        abrirPanelOrden(numero);
+      });
+    });
+
+    btnCerrarOrden.addEventListener('click', cerrarPanelOrden);
+
+    formOrden.addEventListener('submit', e => {
+      e.preventDefault();
+      const producto = formOrden.producto.value;
+      const cantidad = parseInt(formOrden.cantidad.value);
+      if (!producto || cantidad < 1) return;
+      agregarProducto(producto, cantidad);
+      formOrden.reset();
+      formOrden.cantidad.value = 1;
+    });
+
+    btnEnviarCobro.addEventListener('click', () => {
+      if (!mesaSeleccionada) return alert("No hay mesa seleccionada.");
+
+      fetch(`/mesa/${mesaSeleccionada}/estado/cobro`)
+        .then(res => {
+          if (res.ok) {
+            alert(`Mesa ${mesaSeleccionada} enviada a cobrar.`);
+            cerrarPanelOrden();
+            location.reload();
+          } else {
+            alert("Error al enviar a cobrar.");
+          }
+        })
+        .catch(() => alert("Error de red al enviar a cobrar."));
+    });
+  });
+</script>
+{% endblock %}
